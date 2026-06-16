@@ -1,8 +1,16 @@
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+var authConnectionString = builder.Configuration.GetConnectionString("AuthDb")
+    ?? throw new InvalidOperationException("Connection string 'AuthDb' not found.");
+
+builder.Services.AddDbContext<AuthDbContext>(options =>
+    options.UseNpgsql(authConnectionString));
 
 var app = builder.Build();
 
