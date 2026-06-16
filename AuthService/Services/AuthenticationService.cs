@@ -17,6 +17,15 @@ public class AuthenticationService : IAuthenticationService
 
     public async Task<Usuario> CriarUsuario(RegistrarUsuarioRequest request)
     {
+
+        bool emailExiste = await _context.Usuarios.AnyAsync(u => u.Email == request.Email);
+
+        if (emailExiste)
+        {
+            throw new InvalidOperationException(
+                "E-mail já cadastrado.");
+        }
+
         var usuario = new Usuario
         {
             Id = Guid.NewGuid(),
