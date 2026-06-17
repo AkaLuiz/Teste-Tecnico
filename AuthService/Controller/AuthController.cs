@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 namespace AuthService.Controller;
 
 [ApiController]
@@ -24,5 +26,39 @@ public class AuthController : ControllerBase
     {
         var usuario = await _authService.CriarUsuario(request);
         return Created($"/auth/usuarios/{usuario.Id}", usuario);
+    }
+
+    [HttpGet("usuarios")]
+    public async Task<ActionResult<List<Usuario>>> ListarUsuarios()
+    {
+        var usuarios = await _authService.ListarUsuarios();
+        return Ok(usuarios);
+    }
+
+    [HttpGet("usuarios/{id}")]
+    public async Task<ActionResult<Usuario>> BuscarPorId(Guid id)
+    {
+        var usuario = await _authService.BuscarPorId(id);
+        if(usuario == null)
+            return NotFound();
+
+        return Ok(usuario);
+    }
+
+    [Authorize]
+    [HttpGet("me")]
+    public async Task<ActionResult<Usuario>> ObterInformacoesDoUsuarioLogado()
+    {
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (userId == null)
+        {
+            return Unauthorized();
+        }
+        var usuario = await _authService.BuscarPorId(Guid.Parse(userId));
+        if (usuario == null)
+        {
+            return NotFound();
+        }
+        return Ok(usuario);
     }
 }

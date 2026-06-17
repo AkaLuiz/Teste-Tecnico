@@ -5,4 +5,6 @@ public interface IAuthenticationService
     Task<Usuario> CriarUsuario(RegistrarUsuarioRequest request);
 
     Task<Usuario?> BuscarPorId(Guid id);
+
+    Task<List<Usuario>> ListarUsuarios();
 }

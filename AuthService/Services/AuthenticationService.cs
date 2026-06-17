@@ -15,6 +15,11 @@ public class AuthenticationService : IAuthenticationService
         return _context.Usuarios.FirstOrDefaultAsync(u => u.Id == id);
     }
 
+    public Task<List<Usuario>> ListarUsuarios()
+    {
+        return _context.Usuarios.ToListAsync();
+    }
+
     public async Task<Usuario> CriarUsuario(RegistrarUsuarioRequest request)
     {
 
