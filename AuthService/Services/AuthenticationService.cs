@@ -27,8 +27,7 @@ public class AuthenticationService : IAuthenticationService
 
         if (emailExiste)
         {
-            throw new InvalidOperationException(
-                "E-mail já cadastrado.");
+            throw new InvalidOperationException("E-mail já cadastrado.");
         }
 
         var usuario = new Usuario

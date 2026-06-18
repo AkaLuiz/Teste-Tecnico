@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
-namespace AuthService.Controller;
+namespace AuthService.Controllers;
 
 [ApiController]
 [Route("auth")]
