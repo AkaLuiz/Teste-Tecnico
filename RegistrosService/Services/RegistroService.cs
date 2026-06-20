@@ -14,7 +14,7 @@ public class RegistroService : IRegistroService
     {
         return _context.Registros.FirstOrDefaultAsync(r => r.Id == id);
     }
-    
+
     public async Task<List<Registro>> ListarRegistros(RegistroFiltroRequest filtro)
     {
         IQueryable<Registro> query = _context.Registros;
@@ -47,24 +47,24 @@ public class RegistroService : IRegistroService
         bool dataEntradaValida = request.DataEntrada <= DateOnly.FromDateTime(DateTime.UtcNow);
         if (!dataEntradaValida)
             throw new InvalidOperationException("Data de entrada não pode ser futura.");
-        
+
         if (request.DataEntrada == DateOnly.MinValue)
             throw new InvalidOperationException("Data de entrada é obrigatória.");
-        
+
         bool nomeApresentanteInvalido = string.IsNullOrWhiteSpace(request.NomeApresentante);
         if (nomeApresentanteInvalido)
             throw new InvalidOperationException("Nome apresentante deve ser preenchido.");
 
-            var registro = new Registro
-            {
-                Id = Guid.NewGuid(),
-                Tipo = request.Tipo,
-                NomeApresentante = request.NomeApresentante,
-                CpfCnpj = request.CpfCnpj,
-                DataEntrada = request.DataEntrada,
-                Observacoes = request.Observacoes,
-                CriadoPor = usuarioId
-            };
+        var registro = new Registro
+        {
+            Id = Guid.NewGuid(),
+            Tipo = request.Tipo,
+            NomeApresentante = request.NomeApresentante,
+            CpfCnpj = request.CpfCnpj,
+            DataEntrada = request.DataEntrada,
+            Observacoes = request.Observacoes,
+            CriadoPor = usuarioId
+        };
         _context.Registros.Add(registro);
         await _context.SaveChangesAsync();
         return registro;
@@ -72,11 +72,26 @@ public class RegistroService : IRegistroService
 
     public async Task<Registro?> AtualizarRegistro(Guid id, AtualizarRegistroRequest request)
     {
+        bool cpfCnpjValido = CpfCnpjValidator.Validar(request.CpfCnpj);
+        if (!cpfCnpjValido)
+            throw new InvalidOperationException("CPF/CNPJ inválido.");
+
+        bool dataEntradaValida = request.DataEntrada <= DateOnly.FromDateTime(DateTime.UtcNow);
+        if (!dataEntradaValida)
+            throw new InvalidOperationException("Data de entrada não pode ser futura.");
+
+        if (request.DataEntrada == DateOnly.MinValue)
+            throw new InvalidOperationException("Data de entrada é obrigatória.");
+
+        bool nomeApresentanteInvalido = string.IsNullOrWhiteSpace(request.NomeApresentante);
+        if (nomeApresentanteInvalido)
+            throw new InvalidOperationException("Nome apresentante deve ser preenchido.");
+
         var registro = await BuscarPorId(id);
 
         if (registro == null)
             return null;
-        
+
         registro.Tipo = request.Tipo;
         registro.NomeApresentante = request.NomeApresentante;
         registro.CpfCnpj = request.CpfCnpj;
@@ -85,7 +100,7 @@ public class RegistroService : IRegistroService
 
         registro.AtualizadoEm = DateTime.UtcNow;
         await _context.SaveChangesAsync();
-        return registro;  
+        return registro;
     }
 
     public async Task<Registro?> AlterarStatus(Guid id, AlterarStatusRequest novoStatus)
@@ -98,7 +113,7 @@ public class RegistroService : IRegistroService
         {
             throw new InvalidOperationException("Registro já finalizado.");
         }
-        
+
         if (registro.Status == novoStatus.Status)
         {
             throw new InvalidOperationException(
@@ -114,7 +129,7 @@ public class RegistroService : IRegistroService
     public async Task<Registro?> DeletarPorId(Guid id)
     {
         var registro = await BuscarPorId(id);
-        if(registro == null)
+        if (registro == null)
             return null;
         _context.Registros.Remove(registro);
         await _context.SaveChangesAsync();

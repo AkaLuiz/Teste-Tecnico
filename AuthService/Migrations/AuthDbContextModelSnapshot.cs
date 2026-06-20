@@ -65,7 +65,7 @@ namespace AuthService.Migrations
                             Ativo = true,
                             Email = "registrador@example.com",
                             Name = "Registrador",
-                            Senha = "$2a$11$2W47yF7X7vkJ1L6WIxuLOudbt9va6JK79twHwt0T5bEeKsitCgyM",
+                            Senha = "$2a$11$SOlOp.7wMedXA.mb6K0kzup9BlJVzKOB4KIlnGjObrRxeXS745kZa",
                             UsuarioPapel = 1
                         },
                         new

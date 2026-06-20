@@ -35,7 +35,7 @@ public class AuthDbContext : DbContext
                     Name = "Registrador",
                     Email = "registrador@example.com",
                     // Senha: "registrador123"
-                    Senha = "$2a$11$2W47yF7X7vkJ1L6WIxuLOudbt9va6JK79twHwt0T5bEeKsitCgyM",
+                    Senha = "$2a$11$SOlOp.7wMedXA.mb6K0kzup9BlJVzKOB4KIlnGjObrRxeXS745kZa",
                     UsuarioPapel = UsuarioPapel.Registrador,
                     Ativo = true
                 },

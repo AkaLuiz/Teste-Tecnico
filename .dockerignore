@@ -1,0 +1,7 @@
+**/bin/
+**/obj/
+**/node_modules/
+**/.git/
+frontend/dist/
+frontend/.vite/
+.tmp/

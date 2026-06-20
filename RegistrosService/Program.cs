@@ -10,6 +10,18 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IRegistroService, RegistroService>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("Frontend",
+        policy =>
+        {
+            policy
+                .WithOrigins("http://localhost:5173")
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+        });
+});
+
 builder.Services.AddAuthentication(
     JwtBearerDefaults.AuthenticationScheme)
 .AddJwtBearer(options =>
@@ -41,10 +53,6 @@ builder.Services.AddDbContext<RegistrosDbContext>(options =>
 
 var app = builder.Build();
 
-app.UseAuthentication();
-app.UseAuthorization();
-
-
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
@@ -54,6 +62,17 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors("Frontend");
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.MapControllers();
+
+if (app.Environment.IsDevelopment())
+{
+    using var scope = app.Services.CreateScope();
+    var dbContext = scope.ServiceProvider.GetRequiredService<RegistrosDbContext>();
+    dbContext.Database.Migrate();
+}
 
 app.Run();
