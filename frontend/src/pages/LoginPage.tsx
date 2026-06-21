@@ -30,8 +30,16 @@ export default function Login() {
       );
 
       navigate("/registros");
-    } catch {
-      setErro("Email ou senha inválidos.");
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        const data = error.response?.data;
+
+        if (typeof data === "string") {
+          setErro(data);
+        } else {
+          setErro(data?.title ?? "Ocorreu um erro.");
+        }
+      }
     } finally {
       setLoading(false);
     }

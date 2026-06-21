@@ -18,7 +18,7 @@ interface Registro {
   criadoPor: string;
   criadoEm: string;
   atualizadoEm: string;
-    CriadoPorNome: string;
+  criadoPorNome: string;
 }
 
 interface Usuario {
@@ -35,7 +35,6 @@ export default function RegistrosPage() {
   const token = localStorage.getItem("token");
 
   async function carregarUsuarios() {
-
     //Carregar dados do usuário logado
     const responseUsuario = await axios.get<Usuario>(
       "http://localhost:5167/auth/me",
@@ -206,109 +205,111 @@ export default function RegistrosPage() {
         </button>
       </div>
 
-      <table className="table table-striped">
-        <thead>
-          <tr>
-            <th>Tipo</th>
-            <th>Apresentante</th>
-            <th>CPF/CNPJ</th>
-            <th>Data Entrada</th>
-            <th>Status</th>
-            <th>Observações</th>
-            <th>Criado Por</th>
-            <th>Criado Em</th>
-            <th>Atualizado Em</th>
-            {usuario && usuario.usuarioPapel < 2 && (<th>Ações</th>)}
-            
-          </tr>
-        </thead>
+      <div className="table-responsive-md">
+        <table className="table table-striped table-responsive">
+          <thead>
+            <tr>
+              <th>Tipo</th>
+              <th>Apresentante</th>
+              <th>CPF/CNPJ</th>
+              <th>Data Entrada</th>
+              <th>Status</th>
+              <th>Observações</th>
+              <th>Criado Por</th>
+              <th>Criado Em</th>
+              <th>Atualizado Em</th>
+              {usuario && usuario.usuarioPapel < 2 && <th>Ações</th>}
+            </tr>
+          </thead>
 
-        <tbody>
-          {registros.map((registro) => (
-            <tr key={registro.id}>
-              <td>{tipos[registro.tipo]}</td>
-              <td>{registro.nomeApresentante}</td>
-              <td>{formatarCpfCnpj(registro.cpfCnpj)}</td>
-              <td>{registro.dataEntrada.split("-").reverse().join("/")}</td>
-              <td>{status[registro.status]}</td>
-              <td>{registro.observacoes}</td>
-              <td>{registro.CriadoPorNome}</td>
-              <td>{new Date(registro.criadoEm).toLocaleString("pt-BR")}</td>
-              <td>{new Date(registro.atualizadoEm).toLocaleString("pt-BR")}</td>
-              <td>
-                <div className="d-flex gap-2">
-                  {usuario && usuario.usuarioPapel === 0 && (
-                    <button
-                      className="btn btn-danger"
-                      onClick={() => deletarRegistro(registro.id)}
-                    >
-                      <i className="bi bi-trash3-fill"></i>
-                    </button>
-                  )}
-                  {usuario &&
-                    (usuario.usuarioPapel === 0 ||
-                      usuario.usuarioPapel === 1) && (
-                      <Link
-                        className="btn btn-warning"
-                        to={`/registros/editar/${registro.id}`}
-                      >
-                        <i className="bi bi-pencil-fill"></i>
-                      </Link>
-                    )}
-                  {registro.status === 0 &&
-                    usuario &&
-                    usuario.usuarioPapel != 2 && (
-                      <>
-                        <button
-                          className="btn btn-secondary"
-                          onClick={() =>
-                            alterarStatus(
-                              registro.id,
-                              2,
-                              "Deseja realmente devolver este registro?",
-                            )
-                          }
-                        >
-                          Devolver
-                        </button>
-
-                        <button
-                          className="btn btn-success"
-                          onClick={() =>
-                            alterarStatus(
-                              registro.id,
-                              1,
-                              "Deseja realmente devolver este registro?",
-                            )
-                          }
-                        >
-                          Registrar
-                        </button>
-                      </>
-                    )}
-                  {registro.status === 2 &&
-                    usuario &&
-                    usuario.usuarioPapel != 2 && (
+          <tbody>
+            {registros.map((registro) => (
+              <tr key={registro.id}>
+                <td>{tipos[registro.tipo]}</td>
+                <td>{registro.nomeApresentante}</td>
+                <td>{formatarCpfCnpj(registro.cpfCnpj)}</td>
+                <td>{registro.dataEntrada.split("-").reverse().join("/")}</td>
+                <td>{status[registro.status]}</td>
+                <td>{registro.observacoes}</td>
+                <td>{registro.criadoPorNome}</td>
+                <td>{new Date(registro.criadoEm).toLocaleString("pt-BR")}</td>
+                <td>
+                  {new Date(registro.atualizadoEm).toLocaleString("pt-BR")}
+                </td>
+                <td>
+                  <div className="d-flex gap-2">
+                    {usuario && usuario.usuarioPapel === 0 && (
                       <button
-                        className="btn btn-info"
-                        onClick={() =>
-                          alterarStatus(
-                            registro.id,
-                            0,
-                            "Deseja realmente devolver este registro?",
-                          )
-                        }
+                        className="btn btn-danger"
+                        onClick={() => deletarRegistro(registro.id)}
                       >
-                        Reapresentar
+                        <i className="bi bi-trash3-fill"></i>
                       </button>
                     )}
-                </div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                    {usuario &&
+                      (usuario.usuarioPapel === 0 ||
+                        usuario.usuarioPapel === 1) && (
+                        <Link
+                          className="btn btn-warning"
+                          to={`/registros/editar/${registro.id}`}
+                        >
+                          <i className="bi bi-pencil-fill"></i>
+                        </Link>
+                      )}
+                    {registro.status === 0 &&
+                      usuario &&
+                      usuario.usuarioPapel != 2 && (
+                        <>
+                          <button
+                            className="btn btn-secondary"
+                            onClick={() =>
+                              alterarStatus(
+                                registro.id,
+                                2,
+                                "Deseja realmente devolver este registro?",
+                              )
+                            }
+                          >
+                            Devolver
+                          </button>
 
+                          <button
+                            className="btn btn-success"
+                            onClick={() =>
+                              alterarStatus(
+                                registro.id,
+                                1,
+                                "Deseja realmente devolver este registro?",
+                              )
+                            }
+                          >
+                            Registrar
+                          </button>
+                        </>
+                      )}
+                    {registro.status === 2 &&
+                      usuario &&
+                      usuario.usuarioPapel != 2 && (
+                        <button
+                          className="btn btn-info"
+                          onClick={() =>
+                            alterarStatus(
+                              registro.id,
+                              0,
+                              "Deseja realmente devolver este registro?",
+                            )
+                          }
+                        >
+                          Reapresentar
+                        </button>
+                      )}
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       <div className="d-flex gap-2 mt-3">
         <button
           className="btn btn-secondary"

@@ -13,6 +13,7 @@ public class JwtService
         var claims = new List<Claim>
         {
             new Claim(JwtRegisteredClaimNames.Sub, usuario.Id.ToString()),
+            new Claim(ClaimTypes.Name, usuario.Name),
             new Claim(ClaimTypes.Role, usuario.UsuarioPapel.ToString())
         };
         var tokenDescriptor = new SecurityTokenDescriptor

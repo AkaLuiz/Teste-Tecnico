@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Navigate } from "react-router-dom";
 
 interface Props {
@@ -6,10 +7,18 @@ interface Props {
 
 export default function ProtectedRoute({ children }: Props) {
   const token = localStorage.getItem("token");
+  const expiration = Number(localStorage.getItem("tokenExpiration"));
+  const agora = new Date().getTime()
+  const expirado = !token || !expiration || agora > expiration;
 
-  const expiration = localStorage.getItem("tokenExpiration");
+  useEffect(() => {
+    if (expirado) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("tokenExpiration");
+    }
+  }, [expirado]);
 
-  if (!token || !expiration) {
+  if (expirado) {
     return <Navigate to="/" replace />;
   }
 

@@ -78,12 +78,16 @@ export default function RegistroFormPage() {
       navigate("/registros");
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
-        setErro(
-          error.response?.data?.mensagem ??
-            "Ocorreu um erro ao salvar o registro.",
-        );
-      } else {
-        setErro("Erro inesperado.");
+        const data = error.response?.data;
+
+        if (typeof data === "string") {
+          setErro(data);
+        } else if (data?.errors) {
+          const primeiraChave = Object.keys(data.errors)[0];
+          setErro(data.errors[primeiraChave][0]);
+        } else {
+          setErro(data?.title ?? "Ocorreu um erro.");
+        }
       }
     }
   }

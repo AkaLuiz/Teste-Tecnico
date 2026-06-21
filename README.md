@@ -1,6 +1,6 @@
 # Cartorio RTDPJ
 
-Sistema simplificado para registro de documentos cartorarios, desenvolvido para o teste tecnico da Central ON-RTDPJ.
+Sistema simplificado para registro de documentos cartorários, desenvolvido para o teste técnico da Central ON-RTDPJ.
 
 O projeto usa dois servicos backend independentes em C#/.NET, um frontend React + TypeScript e dois bancos PostgreSQL separados.
 
@@ -11,10 +11,10 @@ O projeto usa dois servicos backend independentes em C#/.NET, um frontend React 
 - [Como rodar com Docker](#como-rodar-com-docker)
 - [Como rodar localmente](#como-rodar-localmente)
 - [Credenciais de seed](#credenciais-de-seed)
-- [Permissoes](#permissoes)
+- [Permissões](#permissões)
 - [APIs](#apis)
 - [Testes](#testes)
-- [Decisoes tecnicas](#decisoes-tecnicas)
+- [Decisões técnicas](#decisões-técnicas)
 - [O que faria diferente com mais tempo](#o-que-faria-diferente-com-mais-tempo)
 
 ## Arquitetura
@@ -38,7 +38,7 @@ Frontend React + TypeScript
          - Banco: cartorio_registros
 ```
 
-Cada servico tem sua propria responsabilidade e seu proprio banco. O `RegistrosService` valida localmente a assinatura do JWT emitido pelo `AuthService`, usando a mesma chave simetrica configurada nos dois servicos.
+Cada servico tem sua própria responsabilidade e seu proprio banco. O `RegistrosService` valida localmente a assinatura do JWT emitido pelo `AuthService`, usando a mesma chave simetrica configurada nos dois servicos.
 
 ## Tecnologias
 
@@ -52,6 +52,7 @@ Cada servico tem sua propria responsabilidade e seu proprio banco. O `RegistrosS
 - Bootstrap
 - Docker Compose
 - xUnit
+- Cypress
 
 ## Como Rodar Com Docker
 
@@ -82,14 +83,14 @@ O `docker-compose.yml` sobe:
 - `registros-service`: API de registros
 - `frontend`: aplicacao React com `npm run dev`
 
-Os bancos criados no container sao:
+Os bancos criados no container são:
 
 ```text
 cartorio_auth
 cartorio_registros
 ```
 
-As migrations sao aplicadas automaticamente quando os servicos sobem em ambiente `Development`.
+As migrations são aplicadas automaticamente quando os servicos sobem em ambiente `Development`.
 
 Para parar:
 
@@ -148,7 +149,7 @@ npm run dev
 
 ## Credenciais De Seed
 
-O `AuthService` possui seed com um usuario de cada papel.
+O `AuthService` possui seed com um usuário de cada papel.
 
 | Papel | Email | Senha |
 | --- | --- | --- |
@@ -158,7 +159,7 @@ O `AuthService` possui seed com um usuario de cada papel.
 
 As senhas sao armazenadas com hash BCrypt.
 
-## Permissoes
+## Permissões
 
 ### AuthService
 
@@ -174,15 +175,15 @@ As senhas sao armazenadas com hash BCrypt.
 
 | Rota | ADMIN | REGISTRADOR | CONSULTA |
 | --- | --- | --- | --- |
-| `POST /registros` | Sim | Sim | Nao |
+| `POST /registros` | Sim | Sim | Não |
 | `GET /registros` | Sim | Sim | Sim |
 | `GET /registros/{id}` | Sim | Sim | Sim |
-| `PUT /registros/{id}` | Sim | Sim | Nao |
-| `PATCH /registros/{id}/status` | Sim | Sim | Nao |
-| `DELETE /registros/{id}` | Sim | Nao | Nao |
+| `PUT /registros/{id}` | Sim | Sim | Não |
+| `PATCH /registros/{id}/status` | Sim | Sim | Não |
+| `DELETE /registros/{id}` | Sim | Não | Não |
 
-Sem token ou com token invalido, a API retorna `401`.
-Com token valido, mas sem permissao para a acao, a API retorna `403`.
+Sem token ou com token inválido, a API retorna `401`.
+Com token válido, mas sem permissão para a ação, a API retorna `403`.
 
 ## APIs
 
@@ -328,7 +329,7 @@ Content-Type: application/json
 }
 ```
 
-Transicoes esperadas:
+Transições esperadas:
 
 ```text
 Pendente -> Registrado
@@ -337,7 +338,7 @@ Devolvido -> Pendente
 Registrado -> qualquer outro status: invalido
 ```
 
-Transicao invalida retorna `422`.
+Transição inválida retorna `422`.
 
 #### Deletar Registro
 
@@ -347,6 +348,8 @@ Authorization: Bearer {token_admin}
 ```
 
 ## Testes
+
+#### Backend
 
 Rodar testes do AuthService:
 
@@ -360,45 +363,39 @@ Rodar testes do RegistrosService:
 dotnet test RegistrosService.Tests\RegistrosService.Tests.csproj
 ```
 
-Rodar build do frontend:
+#### Frontend
+
+Instalar dependências e rodar build do frontend:
 
 ```powershell
 cd frontend
-npm run build
+npm install
+npm run dev
+```
+
+Executar testes E2E com Cypress:
+```powershell
+npm test
 ```
 
 Coberturas implementadas:
 
 - Login com usuario seed
 - Endpoint `/auth/me`
-- Validacao de CPF
-- Validacao de CNPJ
-- Regras principais de transicao de status
+- Validação de CPF
+- Validação de CNPJ
+- Regras principais de transição de status
 
-## Decisoes Tecnicas
-
-### Dois bancos separados
-
-O `AuthService` e o `RegistrosService` usam bancos diferentes para preservar a fronteira entre os servicos. O servico de registros armazena o identificador do usuario que criou o registro, mas nao acessa diretamente as tabelas do banco de autenticacao.
+## Decisões Técnicas
 
 ### JWT validado localmente
 
 O `RegistrosService` valida localmente o JWT emitido pelo `AuthService`. Essa escolha reduz acoplamento em tempo de execucao e evita uma chamada HTTP ao `AuthService` em toda requisicao protegida.
 
-### Controle de permissao no backend e no frontend
-
-O backend usa `[Authorize]` e `[Authorize(Roles = "...")]` como camada principal de seguranca. O frontend tambem esconde acoes que o papel atual nao pode executar, melhorando a experiencia do usuario sem substituir a autorizacao do backend.
-
-### Docker para ambiente completo
-
-O Docker Compose foi usado para subir frontend, dois servicos backend e PostgreSQL com um unico comando, facilitando a avaliacao e reduzindo dependencia de configuracoes locais.
-
 ## O Que Faria Diferente Com Mais Tempo
 
-- Criar testes de integracao cobrindo o fluxo completo: login, criar registro, listar, alterar status e validar uma acao proibida com `403`.
-- Adicionar testes automatizados no frontend com Testing Library ou Playwright.
 - Extrair a configuracao do JWT para variaveis de ambiente ou secret manager.
 - Criar um BFF/API Gateway para centralizar as chamadas do frontend.
-- Melhorar o tratamento global de erros para padronizar respostas JSON.
+- Implementar refresh token.
 - Adicionar CI no GitHub Actions para rodar build, lint e testes a cada push.
-- Melhorar a paginacao retornando tambem total de itens e total de paginas.
+- Melhorar a paginação retornando tambem total de itens e total de paginas.
