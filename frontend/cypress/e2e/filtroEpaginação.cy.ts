@@ -29,9 +29,15 @@ describe("Filtrar e paginar", () => {
 
     cy.contains("Contratos").click();
 
+    cy.contains(/^Contrato$/);
+
     cy.contains("Procurações").click();
 
+    cy.contains("Procuracao");
+
     cy.contains("Notificações").click();
+
+    cy.contains("Notificacao");
 
     cy.contains("Limpar filtros").click();
   });
