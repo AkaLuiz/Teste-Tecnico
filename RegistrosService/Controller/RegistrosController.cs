@@ -22,14 +22,17 @@ public class RegistrosController : ControllerBase
         try
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var userName = User.FindFirst(ClaimTypes.Name)?.Value;
             if (userId == null)
             {
                 return Unauthorized();
             }
-            var registro = await _registroService.CriarRegistro(request, Guid.Parse(userId));
+            var registro = await _registroService.CriarRegistro(request, Guid.Parse(userId),userName);
 
             return Created($"registros/{registro.Id}", registro);
         }
+
+
         catch (InvalidOperationException e)
         {
             return BadRequest(e.Message);

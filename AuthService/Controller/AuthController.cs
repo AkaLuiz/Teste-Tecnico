@@ -22,6 +22,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("usuarios")]
+    [Authorize(Roles ="Admin")]
     public async Task<ActionResult<Usuario>> CriarUsuario(RegistrarUsuarioRequest request)
     {
         var usuario = await _authService.CriarUsuario(request);
@@ -29,6 +30,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpGet("usuarios")]
+    [Authorize(Roles ="Admin")]
     public async Task<ActionResult<List<Usuario>>> ListarUsuarios()
     {
         var usuarios = await _authService.ListarUsuarios();
@@ -36,6 +38,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpGet("usuarios/{id}")]
+    [Authorize(Roles ="Admin")]
     public async Task<ActionResult<Usuario>> BuscarPorId(Guid id)
     {
         var usuario = await _authService.BuscarPorId(id);

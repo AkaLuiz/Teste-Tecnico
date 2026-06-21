@@ -50,16 +50,13 @@ public class AuthenticationService : IAuthenticationService
         
         if(usuario == null)
             throw new UnauthorizedAccessException("Credenciais inválidas.");
-            //Solicitado que não seja possível identificar se o email ou senha estão incorretos.
         
         bool senhaValida = BCrypt.Net.BCrypt.Verify(request.Senha, usuario.Senha);
         if(!senhaValida)
             throw new UnauthorizedAccessException("Credenciais inválidas.");
-            //Solicitado que não seja possível identificar se o email ou senha estão incorretos.
 
         if(!usuario.Ativo)
             throw new UnauthorizedAccessException("Usuário inativo.");
-            //Como solicitado, usuário inativo não loga.
 
         string token = _jwtService.GerarToken(usuario);
         return new LoginResponse { Token = token };

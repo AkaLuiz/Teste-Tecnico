@@ -18,6 +18,7 @@ interface Registro {
   criadoPor: string;
   criadoEm: string;
   atualizadoEm: string;
+    CriadoPorNome: string;
 }
 
 interface Usuario {
@@ -34,23 +35,6 @@ export default function RegistrosPage() {
   const token = localStorage.getItem("token");
 
   async function carregarUsuarios() {
-    //Carregar todos os usuários
-    const responseUsuarios = await axios.get<Usuario[]>(
-      "http://localhost:5167/auth/usuarios",
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
-    );
-
-    const mapa = new Map<string, string>();
-
-    responseUsuarios.data.forEach((usuario) => {
-      mapa.set(usuario.id, usuario.name);
-    });
-
-    setMapaUsuarios(mapa);
 
     //Carregar dados do usuário logado
     const responseUsuario = await axios.get<Usuario>(
@@ -128,9 +112,6 @@ export default function RegistrosPage() {
   }
 
   const [registros, setRegistros] = useState<Registro[]>([]);
-  const [mapaUsuarios, setMapaUsuarios] = useState<Map<string, string>>(
-    new Map(),
-  );
   const [usuario, setUsuario] = useState<Usuario | null>(null);
 
   useEffect(() => {
@@ -237,7 +218,8 @@ export default function RegistrosPage() {
             <th>Criado Por</th>
             <th>Criado Em</th>
             <th>Atualizado Em</th>
-            <th>Ações</th>
+            {usuario && usuario.usuarioPapel < 2 && (<th>Ações</th>)}
+            
           </tr>
         </thead>
 
@@ -250,7 +232,7 @@ export default function RegistrosPage() {
               <td>{registro.dataEntrada.split("-").reverse().join("/")}</td>
               <td>{status[registro.status]}</td>
               <td>{registro.observacoes}</td>
-              <td>{mapaUsuarios.get(registro.criadoPor)}</td>
+              <td>{registro.CriadoPorNome}</td>
               <td>{new Date(registro.criadoEm).toLocaleString("pt-BR")}</td>
               <td>{new Date(registro.atualizadoEm).toLocaleString("pt-BR")}</td>
               <td>

@@ -12,4 +12,5 @@ public class Registro
     public Guid? CriadoPor { get; set; }
     public DateTime CriadoEm { get; set; } = DateTime.UtcNow;
     public DateTime AtualizadoEm { get; set; } = DateTime.UtcNow;
+    public string? CriadoPorNome { get; set; }
 }

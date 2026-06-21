@@ -37,7 +37,7 @@ public class RegistroService : IRegistroService
         return await query.ToListAsync();
     }
 
-    public async Task<Registro> CriarRegistro(CadastrarRegistroRequest request, Guid usuarioId)
+    public async Task<Registro> CriarRegistro(CadastrarRegistroRequest request, Guid usuarioId, string? usuarioNome)
     {
 
         bool cpfCnpjValido = CpfCnpjValidator.Validar(request.CpfCnpj);
@@ -63,7 +63,8 @@ public class RegistroService : IRegistroService
             CpfCnpj = request.CpfCnpj,
             DataEntrada = request.DataEntrada,
             Observacoes = request.Observacoes,
-            CriadoPor = usuarioId
+            CriadoPor = usuarioId,
+            CriadoPorNome = usuarioNome
         };
         _context.Registros.Add(registro);
         await _context.SaveChangesAsync();

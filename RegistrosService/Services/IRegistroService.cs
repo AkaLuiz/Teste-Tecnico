@@ -2,7 +2,7 @@ using RegistrosService.Enums;
 
 public interface IRegistroService
 {
-    Task<Registro> CriarRegistro(CadastrarRegistroRequest request, Guid usuarioId);
+    Task<Registro> CriarRegistro(CadastrarRegistroRequest request, Guid usuarioId, string? usuarioNome);
 
     Task<List<Registro>> ListarRegistros(RegistroFiltroRequest filtro);
 
