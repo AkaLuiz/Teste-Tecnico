@@ -47,6 +47,15 @@ public class RegistrosController : ControllerBase
         return Ok(registros);
     }
 
+    [HttpGet]
+    [Route("todos")]
+    [Authorize]
+    public async Task<ActionResult<List<Registro>>> ListarTodosRegistros()
+    {
+        var registros = await _registroService.ListarTodosRegistros();
+        return Ok(registros);
+    }
+
     [HttpGet("{id}")]
     [Authorize]
     public async Task<ActionResult<Registro>> BuscarPorId(Guid id)

@@ -147,7 +147,11 @@ npm install
 npm run dev
 ```
 
-## Credenciais De Seed
+## Seed
+
+Para que os testes funcionem corretamente, foram criados 3 registros iniciais os quais são 1 de cada tipo.
+
+#### Credenciais De Seed
 
 O `AuthService` possui seed com um usuário de cada papel.
 
@@ -361,6 +365,11 @@ Rodar testes do RegistrosService:
 
 ```powershell
 dotnet test RegistrosService.Tests\RegistrosService.Tests.csproj
+```
+
+Também é possível rodar os dois testes de uma vez na raiz do projeto:
+```powershell
+dotnet test
 ```
 
 #### Frontend

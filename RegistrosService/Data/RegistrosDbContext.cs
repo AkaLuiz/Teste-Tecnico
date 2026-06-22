@@ -47,6 +47,118 @@ public class RegistrosDbContext : DbContext
 
             new Registro
             {
+                Id = Guid.Parse("10000000-0000-0000-0000-000000000004"),
+                Tipo = TipoRegistro.Notificacao,
+                NomeApresentante = "Empresa Notificação SA",
+                CpfCnpj = "42591651000143",
+                DataEntrada = new DateOnly(2026, 6, 18),
+                Status = StatusRegistro.Pendente,
+                Observacoes = "Registro seed notificação",
+                CriadoPor = Guid.Parse("00000000-0000-0000-0000-000000000003"),
+                CriadoPorNome = "Consulta",
+                CriadoEm = new DateTime(2026, 6, 18, 8, 0, 0, DateTimeKind.Utc),
+                AtualizadoEm = new DateTime(2026, 6, 18, 8, 0, 0, DateTimeKind.Utc)
+            },
+                        new Registro
+            {
+                Id = Guid.Parse("10000000-0000-0000-0000-000000000005"),
+                Tipo = TipoRegistro.Notificacao,
+                NomeApresentante = "Empresa Notificação SA",
+                CpfCnpj = "42591651000143",
+                DataEntrada = new DateOnly(2026, 6, 18),
+                Status = StatusRegistro.Pendente,
+                Observacoes = "Registro seed notificação",
+                CriadoPor = Guid.Parse("00000000-0000-0000-0000-000000000003"),
+                CriadoPorNome = "Consulta",
+                CriadoEm = new DateTime(2026, 6, 18, 8, 0, 0, DateTimeKind.Utc),
+                AtualizadoEm = new DateTime(2026, 6, 18, 8, 0, 0, DateTimeKind.Utc)
+            },
+                        new Registro
+            {
+                Id = Guid.Parse("10000000-0000-0000-0000-000000000006"),
+                Tipo = TipoRegistro.Notificacao,
+                NomeApresentante = "Empresa Notificação SA",
+                CpfCnpj = "42591651000143",
+                DataEntrada = new DateOnly(2026, 6, 18),
+                Status = StatusRegistro.Pendente,
+                Observacoes = "Registro seed notificação",
+                CriadoPor = Guid.Parse("00000000-0000-0000-0000-000000000003"),
+                CriadoPorNome = "Consulta",
+                CriadoEm = new DateTime(2026, 6, 18, 8, 0, 0, DateTimeKind.Utc),
+                AtualizadoEm = new DateTime(2026, 6, 18, 8, 0, 0, DateTimeKind.Utc)
+            },
+                        new Registro
+            {
+                Id = Guid.Parse("10000000-0000-0000-0000-000000000007"),
+                Tipo = TipoRegistro.Notificacao,
+                NomeApresentante = "Empresa Notificação SA",
+                CpfCnpj = "42591651000143",
+                DataEntrada = new DateOnly(2026, 6, 18),
+                Status = StatusRegistro.Pendente,
+                Observacoes = "Registro seed notificação",
+                CriadoPor = Guid.Parse("00000000-0000-0000-0000-000000000003"),
+                CriadoPorNome = "Consulta",
+                CriadoEm = new DateTime(2026, 6, 18, 8, 0, 0, DateTimeKind.Utc),
+                AtualizadoEm = new DateTime(2026, 6, 18, 8, 0, 0, DateTimeKind.Utc)
+            },
+                        new Registro
+            {
+                Id = Guid.Parse("10000000-0000-0000-0000-000000000008"),
+                Tipo = TipoRegistro.Notificacao,
+                NomeApresentante = "Empresa Notificação SA",
+                CpfCnpj = "42591651000143",
+                DataEntrada = new DateOnly(2026, 6, 18),
+                Status = StatusRegistro.Pendente,
+                Observacoes = "Registro seed notificação",
+                CriadoPor = Guid.Parse("00000000-0000-0000-0000-000000000003"),
+                CriadoPorNome = "Consulta",
+                CriadoEm = new DateTime(2026, 6, 18, 8, 0, 0, DateTimeKind.Utc),
+                AtualizadoEm = new DateTime(2026, 6, 18, 8, 0, 0, DateTimeKind.Utc)
+            },
+                        new Registro
+            {
+                Id = Guid.Parse("10000000-0000-0000-0000-000000000009"),
+                Tipo = TipoRegistro.Notificacao,
+                NomeApresentante = "Empresa Notificação SA",
+                CpfCnpj = "42591651000143",
+                DataEntrada = new DateOnly(2026, 6, 18),
+                Status = StatusRegistro.Pendente,
+                Observacoes = "Registro seed notificação",
+                CriadoPor = Guid.Parse("00000000-0000-0000-0000-000000000003"),
+                CriadoPorNome = "Consulta",
+                CriadoEm = new DateTime(2026, 6, 18, 8, 0, 0, DateTimeKind.Utc),
+                AtualizadoEm = new DateTime(2026, 6, 18, 8, 0, 0, DateTimeKind.Utc)
+            },
+                        new Registro
+            {
+                Id = Guid.Parse("10000000-0000-0000-0000-000000000010"),
+                Tipo = TipoRegistro.Notificacao,
+                NomeApresentante = "Empresa Notificação SA",
+                CpfCnpj = "42591651000143",
+                DataEntrada = new DateOnly(2026, 6, 18),
+                Status = StatusRegistro.Pendente,
+                Observacoes = "Registro seed notificação",
+                CriadoPor = Guid.Parse("00000000-0000-0000-0000-000000000003"),
+                CriadoPorNome = "Consulta",
+                CriadoEm = new DateTime(2026, 6, 18, 8, 0, 0, DateTimeKind.Utc),
+                AtualizadoEm = new DateTime(2026, 6, 18, 8, 0, 0, DateTimeKind.Utc)
+            },
+                        new Registro
+            {
+                Id = Guid.Parse("10000000-0000-0000-0000-000000000011"),
+                Tipo = TipoRegistro.Notificacao,
+                NomeApresentante = "Empresa Notificação SA",
+                CpfCnpj = "42591651000143",
+                DataEntrada = new DateOnly(2026, 6, 18),
+                Status = StatusRegistro.Pendente,
+                Observacoes = "Registro seed notificação",
+                CriadoPor = Guid.Parse("00000000-0000-0000-0000-000000000003"),
+                CriadoPorNome = "Consulta",
+                CriadoEm = new DateTime(2026, 6, 18, 8, 0, 0, DateTimeKind.Utc),
+                AtualizadoEm = new DateTime(2026, 6, 18, 8, 0, 0, DateTimeKind.Utc)
+            },
+                        new Registro
+            {
                 Id = Guid.Parse("10000000-0000-0000-0000-000000000003"),
                 Tipo = TipoRegistro.Notificacao,
                 NomeApresentante = "Empresa Notificação SA",

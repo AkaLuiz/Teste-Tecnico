@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import CpfCnpjInput from "../components/CpfCnpjInput";
 
 export default function RegistroFormPage() {
@@ -184,10 +184,14 @@ export default function RegistroFormPage() {
             onChange={(e) => setObservacoes(e.target.value)}
           />
         </div>
-
-        <button type="submit" className="btn btn-success">
-          Salvar
-        </button>
+        <div className="d-flex gap-2">
+          <button type="submit" className="btn btn-success">
+            Salvar
+          </button>
+          <Link to="/registros" className="btn btn-secondary">
+            Voltar
+          </Link>
+        </div>
       </form>
     </div>
   );

@@ -37,6 +37,12 @@ public class RegistroService : IRegistroService
         return await query.ToListAsync();
     }
 
+    public async Task<List<Registro>> ListarTodosRegistros()
+    {
+        IQueryable<Registro> query = _context.Registros;
+        return await query.ToListAsync();
+    }
+
     public async Task<Registro> CriarRegistro(CadastrarRegistroRequest request, Guid usuarioId, string? usuarioNome)
     {
 

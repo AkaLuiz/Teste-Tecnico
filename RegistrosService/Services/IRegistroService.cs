@@ -5,6 +5,7 @@ public interface IRegistroService
     Task<Registro> CriarRegistro(CadastrarRegistroRequest request, Guid usuarioId, string? usuarioNome);
 
     Task<List<Registro>> ListarRegistros(RegistroFiltroRequest filtro);
+    Task<List<Registro>> ListarTodosRegistros();
 
     Task<Registro?> BuscarPorId(Guid id);
 
