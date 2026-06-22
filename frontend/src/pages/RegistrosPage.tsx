@@ -344,11 +344,11 @@ export default function RegistrosPage() {
 
           <button
             className={
-              todosRegistros.length <= 10
+              todosRegistros.length < page*10
                 ? "btn btn-secondary"
                 : "btn btn-primary"
             }
-            disabled={todosRegistros.length <= 10}
+            disabled={todosRegistros.length < page*10}
             onClick={() => setPage(page + 1)}
           >
             Próxima
